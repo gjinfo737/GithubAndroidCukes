@@ -1,0 +1,4 @@
+default: --no-source --color --format pretty
+all: --no-source --color --format pretty --tags ~@wip --tags ~@indev
+sanity: --no-source --color --format pretty --tags @sanity --tags ~@wip --tags ~@indev
+wip: --no-source --color --format pretty --tags @wip,@indev

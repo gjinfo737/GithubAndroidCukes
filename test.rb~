@@ -1,0 +1,33 @@
+require 'gametel'
+
+Gametel.apk_path = "../app/bin/CoPilot-debug.apk"
+Gametel.start "_AppActivity"
+
+@driver = Gametel.default_driver
+@platform = @driver.platform
+
+@platform.enter_text "northwoods", :index => 0
+
+def list_item(item, list=0, &block)
+	@platform.chain_calls do |d|
+		d.list_item_by_index(item, list, :target => :Brazenhead, :variable => '@@the_list_item@@')
+		block.call d if block
+	end
+end
+
+def item_image(which_image, item, list=0, &block)
+	list_item(item, list) do |d|
+		d.get_class
+		d.for_name 'android.widget.ImageView', :variable => '@@image_class@@'
+		d.get_current_views '@@image_class@@', '@@the_list_item@@', :target => :Robotium
+		d.get(which_image)
+		block.call d if block
+	end
+end
+
+def tag_for(item, list, which_image=0)
+	item_image(which_image, item, list) do |d|
+		d.get_tag
+	end
+	@platform.last_json
+end

@@ -1,0 +1,10 @@
+source 'http://rubygems.org'
+
+gem 'rake'
+gem 'rspec'
+gem 'cucumber'
+gem 'gametel'
+gem 'childprocess'
+gem 'data_magic'
+gem 'require_all'
+gem 'launchy'
